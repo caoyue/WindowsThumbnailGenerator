@@ -1,7 +1,6 @@
 ﻿using CommandLine;
 using ShellProgressBar;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Thumbnail_Generator_Library;
 
@@ -9,6 +8,7 @@ namespace Thumbnail_Generator_Console
 {
     class Program
     {
+        private const string ExtensionConfigFile = "ext.config";
 
         public class Options
         {
@@ -52,6 +52,7 @@ namespace Thumbnail_Generator_Console
 
             using (ProgressBar progress = new(100, "Processing Directories", options))
             {
+                ProcessHandler.ConfigureSupportedFiles(ExtensionHandler.GetExtensions(ExtensionConfigFile));
                 await ProcessHandler.GenerateThumbnailsForFolder(
                     progress.AsProgress<float>(),
                     opts.TargetDirectory,

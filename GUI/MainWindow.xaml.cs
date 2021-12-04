@@ -11,6 +11,8 @@ namespace Thumbnail_Generator_GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string ExtensionConfigFile = "ext.config";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -44,8 +46,9 @@ namespace Thumbnail_Generator_GUI
                 EnableControls();
                 return;
             }
-            
+
             Progress<float> progress = new(percentage => SetProgress(percentage));
+            ProcessHandler.ConfigureSupportedFiles(ExtensionHandler.GetExtensions(ExtensionConfigFile));
             int result = await ProcessHandler.GenerateThumbnailsForFolder(
                 progress,
                 TargetFolder.Text,
@@ -73,7 +76,7 @@ namespace Thumbnail_Generator_GUI
             ProgressLabel.Visibility = Visibility.Hidden;
             CurrentProgress.Value = 0;
             ProgressLabel.Content = "0%";
-            
+
             TargetFolder.IsEnabled = true;
             BrowseBtn.IsEnabled = true;
             RecursiveChk.IsEnabled = true;
@@ -90,7 +93,7 @@ namespace Thumbnail_Generator_GUI
             StartBtn.Visibility = Visibility.Hidden;
             CurrentProgress.Visibility = Visibility.Visible;
             ProgressLabel.Visibility = Visibility.Visible;
-            
+
             TargetFolder.IsEnabled = false;
             BrowseBtn.IsEnabled = false;
             RecursiveChk.IsEnabled = false;

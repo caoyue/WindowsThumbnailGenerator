@@ -7,12 +7,17 @@ namespace Thumbnail_Generator_Library
 {
     public class ProcessHandler
     {
-        private static readonly string[] supportedFiles = {
+        private static string[] supportedFiles = {
             "jpg", "jpeg", "png", "mp4", "mov", "wmv", "avi", "mkv"
         };
 
         private static volatile int progressCount;
         private static volatile float progressPercentage;
+
+        public static void ConfigureSupportedFiles(string[] ext)
+        {
+            supportedFiles = ext;
+        }
 
         public static async Task<int> GenerateThumbnailsForFolder(
             IProgress<float> progress,
@@ -71,7 +76,7 @@ namespace Thumbnail_Generator_Library
 
                     if (fileList.Length > maxThumbCount)
                     {
-                        fileList = fileList.Take(maxThumbCount).ToArray(); 
+                        fileList = fileList.Take(maxThumbCount).ToArray();
                     }
 
                     ImageHandler.GenerateThumbnail(fileList, iconLocation, shortCover);
