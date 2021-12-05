@@ -45,7 +45,7 @@ namespace Thumbnail_Generator_Library
             await Task.Run(() =>
             {
                 _ = Parallel.ForEach(
-                pathList,
+                pathList.Distinct(),
                 new ParallelOptions { MaxDegreeOfParallelism = maxThreads },
                 directory =>
                 {
